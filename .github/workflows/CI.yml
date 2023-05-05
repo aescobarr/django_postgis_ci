@@ -1,43 +1,43 @@
 name: test postgis django CI
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-    build:
-        runs-on: ubuntu-20.04
-        services:
-            postgres:
-                image: postgis/postgis:12-2.5
-                env:
-                    POSTGRES_USER: postgres
-                    POSTGRES_PASSWORD: postgres
-                    POSTGRES_DB: postgres
-            ports:
-                - 5432:5432
-            options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+  build:
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgis/postgis:12-2.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-        steps:
-        - uses: actions/checkout@v3
+    steps:
+    - uses: actions/checkout@v3
 
-        - name: Install dependencies
-            run: |
-                sudo apt-get -qq update
-                sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev gdal-bin proj-bin proj-data libgeos-dev libgeos++-dev libproj-dev ffmpeg
+    - name: Install dependencies
+      run: |
+        sudo apt-get -qq update
+        sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev gdal-bin proj-bin proj-data libgeos-dev libgeos++-dev libproj-dev ffmpeg
 
-        - name: Setup python environment # setting python environment to 3.8
-            uses: actions/setup-python@v2
-            with:
-                python-version: '3.8'
+    - name: Setup python environment # setting python environment to 3.8
+      uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
 
-        - name: Check Python version # checking the python version to see if 3.x is installed.
-            run: python --version
+    - name: Check Python version # checking the python version to see if 3.x is installed.
+      run: python --version
 
-        - name: Install requirements # install application requirements
-            run: pip install -r requirements.txt
+    - name: Install requirements # install application requirements
+      run: pip install -r requirements.txt
 
-        - name: Run Migrations # run migrations
-            run: python manage.py migrate
+    - name: Run Migrations # run migrations
+      run: python manage.py migrate
 
-        - name: Run Test # running tests
-            run: python manage.py test
+    - name: Run Test # running tests
+      run: python manage.py test
