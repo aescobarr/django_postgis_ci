@@ -22,10 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+if os.getenv('GITHUB_WORKFLOW'):
+  SECRET_KEY = "shhhhh!"
+else:
+  SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+if os.getenv('GITHUB_WORKFLOW'):
+  DEBUG = True
+else:
+  DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = []
 
