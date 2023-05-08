@@ -44,8 +44,11 @@ jobs:
     - name: Install requirements # install application requirements
       run: pip install -r requirements.txt
 
-    - name: Try python GDAL install # install application requirements
-      run: pip install GDAL
+    - name: Print GDAL version # install application requirements
+      run: gdalinfo --version
+
+#    - name: Try python GDAL install # install application requirements
+#      run: pip install GDAL
 
     - name: Run Migrations # run migrations
       run: python manage.py migrate
