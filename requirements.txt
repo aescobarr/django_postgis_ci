@@ -4,4 +4,5 @@ Django==4.2.1
 GDAL==3.0.4
 psycopg2-binary==2.9.6
 python-decouple==3.8
+setuptools==58.0.4
 sqlparse==0.4.4
